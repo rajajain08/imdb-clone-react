@@ -1,21 +1,28 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
-import Header from "./components/Header/Header";
 import SearchResult from "./components/SearchResult/SearchResult";
+import MovieDetails from "./components/MovieDetails/MovieDetails";
+import Login from "./components/Login/Login";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
     <div>
       <Router>
         <div className="App">
-          <Header />
           <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
             <Route path="/home">
               <Home />
             </Route>
-            <Route path="/search">
+            <ProtectedRoute path="/search">
               <SearchResult />
-            </Route>
+            </ProtectedRoute>
+            <ProtectedRoute path="/movieDetails">
+              <MovieDetails />
+            </ProtectedRoute>
           </Switch>
         </div>
       </Router>

@@ -46,3 +46,17 @@ export function getSearchedError(message) {
 export function setSearchValue(value) {
   return { type: types.SET_SEARCH_VALUE, searchValue: value };
 }
+
+export function getDetails(movieId) {
+  return {
+    type: types.GET_DETAILS_REQUESTED,
+    isDetailsLoading: true,
+    movieId: movieId,
+  };
+}
+export function getDetailsSuccess(movieDetails) {
+  return { type: types.GET_DETAILS_SUCCESS, movieDetails: movieDetails };
+}
+export function getDetailsError(message) {
+  return { type: types.GET_DETAILS_FAILED, message: message };
+}

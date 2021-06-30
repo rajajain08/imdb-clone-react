@@ -8,6 +8,8 @@ import {
   getNewError,
   getSearchedSuccess,
   getSearchedError,
+  getDetailsSuccess,
+  getDetailsError,
 } from "../actions/movies";
 
 const moviesApiUrl = "http://www.omdbapi.com/";
@@ -35,6 +37,14 @@ function* getSearchedMovies(action) {
     yield put(getSearchedError(err.message));
   }
 }
+function* getMovieDetails(action) {
+  try {
+    const movies = yield call(getDetails, action.movieId);
+    yield put(getDetailsSuccess(movies));
+  } catch (err) {
+    yield put(getDetailsError(err.message));
+  }
+}
 
 function getMovies(movieName) {
   return axios
@@ -50,9 +60,23 @@ function getMovies(movieName) {
     });
 }
 
+function getDetails(movieId) {
+  return axios
+    .get(moviesApiUrl, {
+      params: { i: movieId, apiKey: "53454e1d" },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+}
+
 function* moviesSaga() {
   yield takeEvery(type.GET_FEATURED_REQUESTED, getFeaturedMovies);
   yield takeEvery(type.GET_NEW_REQUESTED, getNewMovies);
   yield takeEvery(type.GET_SEARCH_REQUESTED, getSearchedMovies);
+  yield takeEvery(type.GET_DETAILS_REQUESTED, getMovieDetails);
 }
 export default moviesSaga;

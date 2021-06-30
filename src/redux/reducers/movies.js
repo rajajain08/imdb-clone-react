@@ -9,6 +9,8 @@ const initialState = {
   newMovies: [],
   searchValue: "",
   error: null,
+  isDetailsLoading: true,
+  movieDetails: null,
 };
 
 export default function movies(state = initialState, action) {
@@ -69,6 +71,24 @@ export default function movies(state = initialState, action) {
       return {
         ...state,
         searchValue: action.searchValue,
+      };
+
+    case type.GET_DETAILS_REQUESTED:
+      return {
+        ...state,
+        isDetailsLoading: true,
+      };
+    case type.GET_DETAILS_SUCCESS:
+      return {
+        ...state,
+        movieDetails: action.movieDetails,
+        isDetailsLoading: false,
+      };
+    case type.GET_DETAILS_FAILED:
+      return {
+        ...state,
+        isDetailsLoading: false,
+        error: action.message,
       };
     default:
       return state;
